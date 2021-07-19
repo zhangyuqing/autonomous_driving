@@ -1,0 +1,7 @@
+baseline/ptrcnn_detect/*
+baseline/ptrcnn_detect_format_tune1/*
+baseline/.ipynb_checkpoints/*
+baseline/.vscode/*
+baseline/cmake-3.20.0/*
+baseline/README.txt
+
