@@ -1,0 +1,3 @@
+/home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Source/Checks/Curses-build/CMakeFiles/rebuild_cache.dir
+/home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Source/Checks/Curses-build/CMakeFiles/CheckCurses.dir
+/home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Source/Checks/Curses-build/CMakeFiles/edit_cache.dir

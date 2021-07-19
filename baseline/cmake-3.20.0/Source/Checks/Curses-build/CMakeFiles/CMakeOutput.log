@@ -1,0 +1,42 @@
+Determining if the function wsyncup exists in the /usr/lib/x86_64-linux-gnu/libcurses.so passed with the following output:
+Change Dir: /home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Source/Checks/Curses-build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_09642/fast && make  -f CMakeFiles/cmTC_09642.dir/build.make CMakeFiles/cmTC_09642.dir/build
+make[1]: Entering directory '/home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Source/Checks/Curses-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_09642.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=wsyncup -o CMakeFiles/cmTC_09642.dir/CheckFunctionExists.c.o -c /home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Modules/CheckFunctionExists.c
+Linking C executable cmTC_09642
+/home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Bootstrap.cmk/cmake -E cmake_link_script CMakeFiles/cmTC_09642.dir/link.txt --verbose=1
+/usr/bin/gcc  -DCHECK_FUNCTION_EXISTS=wsyncup -rdynamic CMakeFiles/cmTC_09642.dir/CheckFunctionExists.c.o -o cmTC_09642  -lcurses 
+make[1]: Leaving directory '/home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Source/Checks/Curses-build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if the function cbreak exists in the /usr/lib/x86_64-linux-gnu/libncurses.so passed with the following output:
+Change Dir: /home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Source/Checks/Curses-build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_0f5de/fast && make  -f CMakeFiles/cmTC_0f5de.dir/build.make CMakeFiles/cmTC_0f5de.dir/build
+make[1]: Entering directory '/home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Source/Checks/Curses-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_0f5de.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=cbreak -o CMakeFiles/cmTC_0f5de.dir/CheckFunctionExists.c.o -c /home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Modules/CheckFunctionExists.c
+Linking C executable cmTC_0f5de
+/home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Bootstrap.cmk/cmake -E cmake_link_script CMakeFiles/cmTC_0f5de.dir/link.txt --verbose=1
+/usr/bin/gcc  -DCHECK_FUNCTION_EXISTS=cbreak -rdynamic CMakeFiles/cmTC_0f5de.dir/CheckFunctionExists.c.o -o cmTC_0f5de  -lncurses 
+make[1]: Leaving directory '/home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Source/Checks/Curses-build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if the function nodelay exists in the /usr/lib/x86_64-linux-gnu/libncurses.so passed with the following output:
+Change Dir: /home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Source/Checks/Curses-build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_58278/fast && make  -f CMakeFiles/cmTC_58278.dir/build.make CMakeFiles/cmTC_58278.dir/build
+make[1]: Entering directory '/home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Source/Checks/Curses-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_58278.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=nodelay -o CMakeFiles/cmTC_58278.dir/CheckFunctionExists.c.o -c /home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Modules/CheckFunctionExists.c
+Linking C executable cmTC_58278
+/home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Bootstrap.cmk/cmake -E cmake_link_script CMakeFiles/cmTC_58278.dir/link.txt --verbose=1
+/usr/bin/gcc  -DCHECK_FUNCTION_EXISTS=nodelay -rdynamic CMakeFiles/cmTC_58278.dir/CheckFunctionExists.c.o -o cmTC_58278  -lncurses 
+make[1]: Leaving directory '/home/yuqingz/autonomous_driving/baseline/cmake-3.20.0/Source/Checks/Curses-build/CMakeFiles/CMakeTmp'
+
+
+
