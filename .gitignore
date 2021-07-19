@@ -4,4 +4,6 @@ baseline/.ipynb_checkpoints/*
 baseline/.vscode/*
 baseline/cmake-3.20.0/*
 baseline/README.txt
-
+baseline/results/*
+baseline/data/*
+.vscode/
