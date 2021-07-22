@@ -5,22 +5,20 @@
 cd /home/yuqingz/autonomous_driving/baseline
 
 # parameters
-RAW_DATA_DIR="/home/yuqingz/autonomous_driving/baseline/data/argoverse-tracking/train4"
-CFG_FILE="/home/yuqingz/autonomous_driving/baseline/OpenPCDet/tools/cfgs/kitti_models/pointrcnn_custom.yaml"
+RAW_DATA_DIR="/home/yuqingz/autonomous_driving/baseline/data/argoverse-tracking/train4"  # directory for raw data
+CFG_FILE="/home/yuqingz/autonomous_driving/baseline/OpenPCDet/tools/cfgs/kitti_models/pointrcnn_custom.yaml"  # model config file
+CKPT_DIR="/home/yuqingz/autonomous_driving/baseline/OpenPCDet/checkpoints/pointrcnn_7870_rmlast.pth"  # checkpoint to fine tune based on
 
-CLEAN=false
+CLEAN=false  # whether to clean data into required format
 CLEAN_DATA_DIR="/home/yuqingz/autonomous_driving/baseline/data/ptrcnn_data"
 
-CKPT_DIR="/home/yuqingz/autonomous_driving/baseline/OpenPCDet/checkpoints/pointrcnn_7870_rmlast.pth"
+TUNE=false  # whether to fine tune checkpoint
+BATCH_SIZE=9  # batch_size (batch_size * GPU)
+EPOCHS=80  # total epochs
+TRAIN_EXP_NAME="exp"  # name of experiment / directory
 
-TUNE=false
-BATCH_SIZE=2
-EPOCHS=80
-TRAIN_EXP_NAME="exp"
-TUNE_OUTPUT_DIR="/home/yuqingz/autonomous_driving/baseline/results/tune_ptrcnn"
-
-DETECT_DIR="/home/yuqingz/autonomous_driving/baseline/results/ptrcnn_detect"
-DETECT_FORMAT_DIR="/home/yuqingz/autonomous_driving/baseline/results/ptrcnn_detect_format"
+DETECT_DIR="/home/yuqingz/autonomous_driving/baseline/results/ptrcnn_detect" # output directory of detection
+DETECT_VIZ=false # whether to visualize the detection result
 
 TRACK_DIR="/home/yuqingz/autonomous_driving/baseline/results/cbgs_kf_tracker"
 TRACK_OUTDIR="ptrcnn_kf_tracking/train-split-track-preds-maxage15-minhits5-conf0.3"
@@ -47,15 +45,11 @@ do
         TRAIN_EXP_NAME=$2
         TUNE=true
         ;;
-        -tunedir|--tunedir)
-        TUNE_OUTPUT_DIR=$2
-        TUNE=true
-        ;;
         -detect_dir|--detect_dir)
         DETECT_DIR=$2
         ;;
-        -detect_format_dir|--detect_format_dir)
-        DETECT_FORMAT_DIR=$2
+        -viz|--viz)
+        DETECT_VIZ=true
         ;;
         -track_dir|--track_dir)
         TRACK_DIR=$2
@@ -74,10 +68,11 @@ if $TUNE; then
     echo "BATCH_SIZE = $BATCH_SIZE"
     echo "EPOCHS = $EPOCHS"
     echo "TRAIN_EXP_NAME = $TRAIN_EXP_NAME"
-    echo "TUNE_OUTPUT_DIR = $TUNE_OUTPUT_DIR"
 fi
 echo "DETECT_DIR = $DETECT_DIR"
-echo "DETECT_FORMAT_DIR = $DETECT_FORMAT_DIR"
+if $DETECT_VIZ; then
+    echo "DETECT_VIZ_DIR = $DETECT_VIZ_DIR"
+fi
 
 
 # process data into ptrcnn data format
@@ -100,8 +95,7 @@ if $TUNE; then
         --epochs $EPOCHS \
         --extra_tag $TRAIN_EXP_NAME \
         --ckpt $CKPT_DIR \
-        --output $TUNE_OUTPUT_DIR    
-    
+        --output $DETECT_DIR
     cd /home/yuqingz/autonomous_driving/baseline
 fi
 
@@ -109,35 +103,49 @@ fi
 # run detection using model checkpoint
 cd /home/yuqingz/autonomous_driving/baseline/OpenPCDet/tools
 
-if [[ ! -e $DETECT_DIR ]]; then
-    mkdir -p $DETECT_DIR
+if [[ ! -e $DETECT_DIR/$TRAIN_EXP_NAME/detect ]]; then
+    mkdir -p $DETECT_DIR/$TRAIN_EXP_NAME/detect
+fi
+
+if $TUNE; then
+    CKPT_DIR=$DETECT_DIR/$TRAIN_EXP_NAME/ckpt/checkpoint_epoch_$EPOCHS.pth
+    echo "Using checkpoint $CKPT_DIR"
 fi
 
 python demo_v2.py \
     --cfg_file $CFG_FILE \
-    --data_path $CLEAN_DATA_DIR \
+    --data_path $CLEAN_DATA_DIR/train \
     --ckpt $CKPT_DIR \
     --ext ".npy" \
-    --output $DETECT_DIR
+    --output $DETECT_DIR/$TRAIN_EXP_NAME/detect
 
 
 # clean detection output format
 cd /home/yuqingz/autonomous_driving/baseline/
 
-if [[ ! -e $DETECT_FORMAT_DIR ]]; then
-    mkdir -p $DETECT_FORMAT_DIR
+if [[ ! -e $DETECT_DIR/$TRAIN_EXP_NAME/format ]]; then
+    mkdir -p $DETECT_DIR/$TRAIN_EXP_NAME/format
 fi
 
 python ./clean_ptrcnn_res.py \
-    -d $DETECT_DIR \
-    -o $DETECT_FORMAT_DIR
+    -d $DETECT_DIR/$TRAIN_EXP_NAME/detect \
+    -o $DETECT_DIR/$TRAIN_EXP_NAME/format
     
 
 # evaluate detection
-python /home/yuqingz/autonomous_driving/baseline/argoverse-api/argoverse/evaluation/detection/eval.py \
-    -d $DETECT_FORMAT_DIR \
-    -g "/home/yuqingz/autonomous_driving/baseline/data/argoverse-tracking-v2/train4" \
-    -f eval
+python /home/yuqingz/autonomous_driving/baseline/argoverse-api/argoverse/evaluation/detection/eval_custom.py \
+    -d $DETECT_DIR/$TRAIN_EXP_NAME/format \
+    -g $RAW_DATA_DIR \
+    -f ./figures
+
+
+# visualize detection
+# if $DETECT_VIZ; then
+#     if [[ ! -e $DETECT_DIR/$TRAIN_EXP_NAME/figures ]]; then
+#         mkdir -p $DETECT_DIR/$TRAIN_EXP_NAME/figures
+#     fi
+# fi
+
 
 
 # run tracking

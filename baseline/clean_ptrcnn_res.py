@@ -6,8 +6,8 @@ from scipy.spatial.transform import Rotation
 import json
 import argparse
 
-# detect_dir = '/home/yuqingz/autonomous_driving/baseline/results/detect_testpipe'
-# output_dir = '/home/yuqingz/autonomous_driving/baseline/results/detect_format_testpipe'
+# detect_dir = '/home/yuqingz/autonomous_driving/baseline/results/ptrcnn_tune2/overfit_trn1/detect'
+# output_dir = '/home/yuqingz/autonomous_driving/baseline/results/ptrcnn_tune2/overfit_trn1/format'
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--detect",
@@ -27,10 +27,9 @@ if args.output:
 
 # CATEGORIES = ['Car', 'Pedestrian', 'Cyclist'] # from pointrcnn.yaml
 # use the same annotation as CBGS
-CATEGORIES = ['VEHICLE', 'PEDESTRIAN', 'BICYCLIST']
-
-# CATEGORIES = ['VEHICLE', 'PEDESTRIAN', 'BICYCLIST',
-#               'BUS', 'ON_ROAD_OBSTACLE', 'LARGE_VEHICLE']
+# CATEGORIES = ['VEHICLE', 'PEDESTRIAN', 'BICYCLIST']
+CATEGORIES = ['VEHICLE', 'PEDESTRIAN', 'BICYCLIST',
+              'BUS', 'ON_ROAD_OBSTACLE', 'LARGE_VEHICLE']
 
 detect_files = os.listdir(detect_dir)
 label_out = {}

@@ -7,3 +7,4 @@ baseline/README.txt
 baseline/results/*
 baseline/data/*
 .vscode/
+baseline/eval/*
