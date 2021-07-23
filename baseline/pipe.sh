@@ -7,7 +7,7 @@ cd /home/yuqingz/autonomous_driving/baseline
 # parameters
 RAW_DATA_DIR="/home/yuqingz/autonomous_driving/baseline/data/argoverse-tracking/train4"  # directory for raw data
 CFG_FILE="/home/yuqingz/autonomous_driving/baseline/OpenPCDet/tools/cfgs/kitti_models/pointrcnn_custom.yaml"  # model config file
-CKPT_DIR="/home/yuqingz/autonomous_driving/baseline/OpenPCDet/checkpoints/pointrcnn_7870_rmlast.pth"  # checkpoint to fine tune based on
+CKPT_DIR="/home/yuqingz/autonomous_driving/baseline/OpenPCDet/checkpoints/pointrcnn_7870.pth"  # checkpoint to fine tune based on
 
 CLEAN=false  # whether to clean data into required format
 CLEAN_DATA_DIR="/home/yuqingz/autonomous_driving/baseline/data/ptrcnn_data"
@@ -43,7 +43,6 @@ do
         ;;
         -exp_name|--exp_name)
         TRAIN_EXP_NAME=$2
-        TUNE=true
         ;;
         -detect_dir|--detect_dir)
         DETECT_DIR=$2
@@ -129,7 +128,8 @@ fi
 
 python ./clean_ptrcnn_res.py \
     -d $DETECT_DIR/$TRAIN_EXP_NAME/detect \
-    -o $DETECT_DIR/$TRAIN_EXP_NAME/format
+    -o $DETECT_DIR/$TRAIN_EXP_NAME/format \
+    -data $RAW_DATA_DIR
     
 
 # evaluate detection
