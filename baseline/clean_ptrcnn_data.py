@@ -4,8 +4,9 @@ import argoverse
 from argoverse.data_loading.argoverse_tracking_loader import ArgoverseTrackingLoader
 from scipy.spatial.transform import Rotation
 import argparse
+import os
 
-data_dir = "/home/yuqingz/autonomous_driving/baseline/data/argoverse-tracking"
+data_dir = "/home/yuqingz/autonomous_driving/baseline/data/argoverse-tracking-v2"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-o", "--Output",
@@ -15,6 +16,11 @@ args = parser.parse_args()
 if args.Output:
     output_dir = args.Output
 # output_dir = "/home/yuqingz/autonomous_driving/baseline/data/ptrcnn_data"
+
+if not os.path.exists(output_dir + '/train'):
+    os.makedirs(output_dir + '/train')
+if not os.path.exists(output_dir + '/val'):
+    os.makedirs(output_dir + '/val')
 
 trn_loader = ArgoverseTrackingLoader(data_dir + '/train4')
 val_loader = ArgoverseTrackingLoader(data_dir + '/val')

@@ -5,7 +5,7 @@
 cd /home/yuqingz/autonomous_driving/baseline
 
 # parameters
-RAW_DATA_DIR="/home/yuqingz/autonomous_driving/baseline/data/argoverse-tracking/train4"  # directory for raw data
+RAW_DATA_DIR="/home/yuqingz/autonomous_driving/baseline/data/argoverse-tracking-v2/train4"  # directory for raw data
 CFG_FILE="/home/yuqingz/autonomous_driving/baseline/OpenPCDet/tools/cfgs/kitti_models/pointrcnn_custom.yaml"  # model config file
 CKPT_DIR="/home/yuqingz/autonomous_driving/baseline/OpenPCDet/checkpoints/pointrcnn_7870.pth"  # checkpoint to fine tune based on
 
@@ -69,9 +69,6 @@ if $TUNE; then
     echo "TRAIN_EXP_NAME = $TRAIN_EXP_NAME"
 fi
 echo "DETECT_DIR = $DETECT_DIR"
-if $DETECT_VIZ; then
-    echo "DETECT_VIZ_DIR = $DETECT_VIZ_DIR"
-fi
 
 
 # process data into ptrcnn data format
@@ -136,15 +133,20 @@ python ./clean_ptrcnn_res.py \
 python /home/yuqingz/autonomous_driving/baseline/argoverse-api/argoverse/evaluation/detection/eval_custom.py \
     -d $DETECT_DIR/$TRAIN_EXP_NAME/format \
     -g $RAW_DATA_DIR \
-    -f ./figures
+    -f /home/yuqingz/autonomous_driving/baseline/baseline/figures
 
 
 # visualize detection
-# if $DETECT_VIZ; then
-#     if [[ ! -e $DETECT_DIR/$TRAIN_EXP_NAME/figures ]]; then
-#         mkdir -p $DETECT_DIR/$TRAIN_EXP_NAME/figures
-#     fi
-# fi
+if $DETECT_VIZ; then
+    if [[ ! -e $DETECT_DIR/$TRAIN_EXP_NAME/figures ]]; then
+        mkdir -p $DETECT_DIR/$TRAIN_EXP_NAME/figures
+    fi
+
+    python /home/yuqingz/autonomous_driving/baseline/detect_visualize.py \
+        -data $RAW_DATA_DIR \
+        -d $DETECT_DIR/$TRAIN_EXP_NAME/format \
+        -f $DETECT_DIR/$TRAIN_EXP_NAME/figures
+fi
 
 
 
