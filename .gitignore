@@ -10,3 +10,4 @@ baseline/data/*
 baseline/eval/*
 explore_data/waymo/*
 explore_data/wod2kitti/*
+2D/waymo/*
