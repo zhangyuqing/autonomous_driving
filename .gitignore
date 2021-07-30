@@ -5,9 +5,12 @@ baseline/.vscode/*
 baseline/cmake-3.20.0/*
 baseline/README.txt
 baseline/results/*
+baseline/figures/*
 baseline/data/*
 .vscode/
 baseline/eval/*
 explore_data/waymo/*
 explore_data/wod2kitti/*
+explore_data/wod2kitti_pad/*
 2D/waymo/*
+2D/waymo_pad/*
