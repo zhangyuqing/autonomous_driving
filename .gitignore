@@ -7,8 +7,9 @@ baseline/README.txt
 baseline/results/*
 baseline/figures/*
 baseline/data/*
-.vscode/
+baseline/run_tracking.sh
 baseline/eval/*
+.vscode/
 explore_data/waymo/*
 explore_data/wod2kitti/*
 explore_data/wod2kitti_pad/*

@@ -35,5 +35,7 @@ if __name__ == "__main__":
 
     for im_path in all_images:
         img = Image.open(img_path + '/' + im_path)
-        img = resize_with_padding(img, expected_size)
-        img.save(output_path + '/' + im_path)
+        if img.width != 1920 or img.height != 1280:
+            print(img.width, img.height)
+        # img = resize_with_padding(img, expected_size)
+        # img.save(output_path + '/' + im_path)
