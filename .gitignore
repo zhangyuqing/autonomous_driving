@@ -15,3 +15,4 @@ explore_data/wod2kitti/*
 explore_data/wod2kitti_pad/*
 2D/waymo/*
 2D/waymo_pad/*
+2D/waymo_ctdet/*
