@@ -14,5 +14,6 @@ exploration/lidar_ptrcnn/.ipynb_checkpoints/*
 exploration/lidar_ptrcnn/.vscode/*
 exploration/lidar_ptrcnn/README.txt
 exploration/lidar_ptrcnn/eval/*
-
+examples/data/*
+examples/tmp_output/*
 
