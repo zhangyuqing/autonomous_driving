@@ -5,3 +5,8 @@ Computer vision has revolutionized the self-driving industry. Object detection a
 ### Goals
 + Develop an AI system to recognize obstacles (at least pedestrians & cars) 
 + Determine distances to the identified objects and give collision warnings when needed
+
+### Detection
+Detection is performed with [CenterNet model](https://github.com/xingyizhou/CenterNet), pretrained on COCO dataset. 
+
+<img src="https://github.com/zhangyuqing/autonomous_driving/blob/main/examples/det.gif" alt="Scene 1" width="200"/>
