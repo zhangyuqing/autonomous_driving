@@ -16,4 +16,4 @@ exploration/lidar_ptrcnn/README.txt
 exploration/lidar_ptrcnn/eval/*
 examples/data/*
 examples/tmp_output/*
-
+examples/tmp_trk_output/*
