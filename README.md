@@ -10,3 +10,8 @@ Computer vision has revolutionized the self-driving industry. Object detection a
 Detection is performed with [CenterNet model](https://github.com/xingyizhou/CenterNet), pretrained on COCO dataset. 
 
 <img src="https://github.com/zhangyuqing/autonomous_driving/blob/main/examples/det.gif" alt="Scene 1" width="600"/>
+
+### Detection & tracking system
+Detection and tracking pipeline is generated using [CenterTrack](https://github.com/xingyizhou/CenterTrack), pretrained on COCO for 80-category tracking.
+
+<img src="https://github.com/zhangyuqing/autonomous_driving/blob/main/examples/trk1.gif" alt="Scene 2" width="600"/>
