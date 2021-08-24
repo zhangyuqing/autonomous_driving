@@ -22,10 +22,10 @@ def make_gif(img_path, output_path, order=False):
         img = cv2.cvtColor(cv2.imread(img_path + '/' + fp), cv2.COLOR_BGR2RGB)
         images.append(img)
 
-    with imageio.get_writer(output_path + "/trk1.gif", mode="I") as writer:
+    with imageio.get_writer(output_path + "/trk2.gif", mode="I") as writer:
         for idx, im in enumerate(images):
             # print("Adding frame to GIF file: ", idx + 1)
-            if 0 <= idx < 50:
+            if 100 <= idx < 200:
                 writer.append_data(im)
 
     # im = Image.open(output_path + "/det.gif")
@@ -34,7 +34,7 @@ def make_gif(img_path, output_path, order=False):
 
 
 def main():
-    img_path = '/home/yuqingz/autonomous_driving/examples/tmp_trk_output'
+    img_path = '/home/yuqingz/autonomous_driving/examples/argo_3D_track_1log'
     output_path = '/home/yuqingz/autonomous_driving/examples'
     make_gif(img_path, output_path, order=True)
 
