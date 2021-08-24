@@ -17,3 +17,6 @@ exploration/lidar_ptrcnn/eval/*
 examples/data/*
 examples/tmp_output/*
 examples/tmp_trk_output/*
+examples/tmp_3D_track/*
+examples/argo_3D_track/*
+examples/argo_3D_track_1log/*
