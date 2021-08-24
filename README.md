@@ -21,6 +21,12 @@ We applied the pre-trained CenterTrack 3D model ([nuScenes_3Dtracking](https://g
 <img src="https://github.com/zhangyuqing/autonomous_driving/blob/main/examples/trk2.gif" alt="Scene 2" width="600"/>
 
 
+### Deployment
+
++ Build API for model that takes video inputs, output detection, tracking, distance monitoring results as the illustration above.
++ Build a web-based UI for the API, takes video uploads, display detection results.
+
+
 ### (Additional) Exploration and learning on LiDAR point cloud data
 
 In addition to using monocular camara images, we explored popular detection algorithms using 3D LiDAR point cloud data. [This directory](https://github.com/zhangyuqing/autonomous_driving/tree/main/exploration/lidar_ptrcnn) contains the experiments using Point R-CNN on point cloud data from the Argoverse 3D tracking dataset. 
