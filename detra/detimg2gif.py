@@ -2,6 +2,7 @@ import cv2
 import os
 import imageio
 from PIL import Image
+import argparse
 
 
 def make_gif(img_path, output_path, order=False):
@@ -22,10 +23,13 @@ def make_gif(img_path, output_path, order=False):
         img = cv2.cvtColor(cv2.imread(img_path + '/' + fp), cv2.COLOR_BGR2RGB)
         images.append(img)
 
-    with imageio.get_writer(output_path + "/trk2.gif", mode="I") as writer:
+    with imageio.get_writer(output_path, mode="I") as writer:
         for idx, im in enumerate(images):
             # print("Adding frame to GIF file: ", idx + 1)
-            if 100 <= idx < 200:
+            if len(images) > 100:
+                if 100 <= idx < 200:
+                    writer.append_data(im)
+            else:
                 writer.append_data(im)
 
     # im = Image.open(output_path + "/det.gif")
@@ -34,8 +38,17 @@ def make_gif(img_path, output_path, order=False):
 
 
 def main():
-    img_path = '/home/yuqingz/autonomous_driving/examples/argo_3D_track_1log'
-    output_path = '/home/yuqingz/autonomous_driving/examples'
+    parser = argparse.ArgumentParser()
+    parser.add_argument("img_path", type=str)
+
+    args = parser.parse_args()
+    img_path = args.img_path
+    if img_path[-1] == "/":
+        img_path = img_path[:len(img_path)-1]
+    file_name = img_path.split('/')[-1]
+    # print("img_path:", img_path, "\nfile_name:", file_name)
+    output_path = f'/home/yuqingz/autonomous_driving/user_data/output_gif/{file_name}.gif'
+
     make_gif(img_path, output_path, order=True)
 
 

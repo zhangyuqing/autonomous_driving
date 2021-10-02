@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Detection & Tracking System for US Self-driving Vehicles</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            /* color: #003262; */
+            color: #1D2228;
+        }
+
+        .container {
+            margin: 0 auto;
+            max-width: 960px;
+            padding: 0 10px;
+        }
+
+        header {
+            background-color: #4A5FC1;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            color: white;
+            /* color: #FDB515; */
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: white;
+        }
+
+        #my-dropzone {
+            border: 2px dashed #DDD5C7;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.5rem;
+            border-radius: 3px;
+            margin-bottom: 20px;
+        }
+
+        #my-dropzone.dz-drag-hover {
+            border: 2px dashed #1D2228;
+        }
+
+        #my-camerazone {
+            border: 2px dashed #DDD5C7;
+            padding: 10px;
+            border-radius: 3px;
+        }
+
+        a {
+            color: #00B0DA;
+        }
+
+        .dz-details,
+        .dz-progress,
+        .dz-success-mark,
+        .dz-error-mark {
+            display: none;
+        }
+
+        input[type="number"] {
+            border: 2px solid #DDD5C7;
+            font-size: 1.0rem;
+            padding: 0px;
+            outline: none;
+            border-radius: 3px;
+            width: 80px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"]:focus {
+            border-color: #00B0DA;
+        }
+
+        input[type="text"] {
+            border: 2px solid #DDD5C7;
+            font-size: 1.5rem;
+            padding: 10px;
+            outline: none;
+            border-radius: 3px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"]:focus {
+            border-color: #00B0DA;
+        }
+
+        input[type="button"] {
+            border: 1px solid #666666;
+            font-size: 0.8rem;
+            padding: 2px;
+            outline: none;
+            border-radius: 3px;
+            width: 100px;
+            height: 30px;
+            margin-bottom: 15px;
+        }
+
+        input[type="button"]:focus {
+            border-color: #00B0DA;
+        }
+
+        #answer {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #answer p {
+            color: #888;
+            font-size: 1.25rem;
+        }
+
+        #answer p:first-of-type {
+            /* color: #003262; */
+            color: #1D2228;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        #viz {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #viz img {
+            height: 350px;
+            /* border: 1px solid #1D2228; */
+        }
+
+        #status {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        hr {
+            height: 0;
+            border: 0;
+            border-bottom: 1px solid #DDD5C7;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 0.9rem;
+        }
+
+        footer {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Detection & Tracking System for US Self-driving Vehicles</h1>
+            <p>Computer vision has revolutionized the self-driving industry.
+                Object detection and tracking are essential tasks that allow vehicles
+                to identify obstacles in its course and take action. We hope to develop
+                an AI system that is useful in self-driving vehicles.</p>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Upload a video</h2>
+        <p>Allowed file types include .jpg, .jpeg, .png, .webp for images, .mp4, .mov, .avi, .mkv for videos </p>
+        <br />
+        <table style="width: 100%" id="my-camerazone">
+            <tr>
+                <td>
+                    <form action="/upload" method="POST" enctype="multipart/form-data">
+                        <input type="file" name="file" />
+                        <input type="submit" value="Upload" />
+                    </form>
+                </td>
+                <td>
+                    OR
+                </td>
+                <td>
+                    <form action="/upload" class="dropzone" id="my-dropzone">
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <h2>Select the file to run</h2>
+        <br />
+        <label for="run_file">Choose a file:</label>
+        <select id="run_file">
+
+        </select>
+        <br />
+        <br />
+        <form action="/run" method="POST">
+            <input type="button" value="Run" onClick="runFile();" />
+        </form>
+
+        <h2>Show result</h2>
+        <br />
+
+    </div>
+    <div id="viz">
+        <!-- <img src="loading.gif" alt="visualization not available" /> -->
+
+        <!-- <table style="width: 100%" id="my-camerazone">
+            <tr>
+                <td>
+                    <h4>Camera input</h4>
+                    <div style="width: 320px;" id="my_camera"></div>
+                </td>
+                <td>
+                    <input type="button" value="Take a single image" onClick="take_one_image();" /><br />
+                    <input type="button" value="Run webcam continuously" onClick="start_webcam();" /><br />
+                    <input type="button" value="Stop running webcam" onClick="stop_webcam();" /><br />
+                </td>
+                <td>
+                    <div style="width: 320px; height: 260px;" id="results"></div>
+                </td>
+            </tr>
+        </table> -->
+        <!-- <input type="text" placeholder="Type a query and hit enter..." id="question" /> -->
+
+
+    </div>
+    <hr>
+    <div>
+        <footer>
+            <p>System created by Yuqing Zhang (<a href="https://www.linkedin.com/in/yqzh/">LinkedIn</a>) </p>
+        </footer>
+    </div>
+
+    <script type="text/javascript">
+        function getRunableFiles() {
+            $.post('/get_files', function (response) {
+                var select = document.getElementById('run_file');
+                var data = response;
+
+                // Add options
+                for (var i = 0; i < data.all_files.length; i++) {
+                    $(select).append('<option value="' + data.all_files[i] + '">' + data.all_files[i] + '</option>');
+                }
+                // Set selected value
+                // $(select).val(data.all_files[1]);
+
+                var value = select.options[select.selectedIndex].value;
+                console.log(value); // en
+            });
+        }
+        getRunableFiles();
+        function runFile() {
+            $.post('/run', {
+                'file_path': $('#run_file').val()
+            }, function (response) {
+                $('#viz').html('<img src="' + response.out_gif + '" />');
+            });
+            $('#viz').html('<img src="loading.gif" />');
+
+        }
+        // function clearResponse() {
+        //     $('#viz').html('');
+        //     $('#status').html('');
+        // }
+
+        // current_image_id = '';
+        // webcam_started = false;
+        // webcam_frames = 0;
+        // Dropzone.options.myDropzone = {
+        //     init: function () {
+        //         this.on('addedfile', function () {
+        //             $('.dz-default').hide();
+        //         });
+        //         this.on('removedfile', function () {
+        //             $('.dz-default').show();
+        //             current_image_id = '';
+        //             clearResponse();
+        //         });
+        //         this.on('success', function (file, response) {
+        //             if (response.error) {
+        //                 this.removeAllFiles();
+        //                 alert(response.error);
+        //             } else {
+        //                 current_image_id = response.img_id;
+        //             }
+        //         });
+        //         this.on('error', function (file, message, xhr) {
+        //             alert(message);
+        //         });
+        //         this.on('drop', function () {
+        //             this.removeAllFiles();
+        //         });
+        //     },
+        //     addRemoveLinks: true,
+        //     uploadMultiple: false,
+        //     dictRemoveFile: "Clear",
+        //     dictDefaultMessage: "Drop image here to upload",
+        //     thumbnailWidth: null,
+        //     thumbnailHeight: 200,
+        //     maxThumbnailFilesize: 20
+        // }
+        // function captureImage(raw_img_string) {
+        //     $.post('/api/capture_image', {
+        //         'raw_img_string': raw_img_string
+        //     }, function (response) {
+        //         if (response.error) {
+        //             clearResponse();
+        //             alert(response.error);
+        //         } else {
+        //             current_image_id = response.img_id;
+
+        //             if (webcam_started) {
+        //                 if ($('#question').val() == "") {
+        //                     alert("Please type a query.");
+        //                     return;
+        //                 }
+        //                 $('#status').text('Computing...');
+        //                 uploadQuestion($('#question').val());
+        //             }
+        //         }
+        //     })
+        // }
+        // function uploadQuestion(question) {
+        //     $.post('/api/upload_question', {
+        //         'img_id': current_image_id,
+        //         'question': question
+        //     }, function (response) {
+        //         if (response.error) {
+        //             clearResponse();
+        //             alert(response.error);
+        //         } else {
+        //             displayAnswers(response.answers, response.scores, response.viz, response.time);
+        //         }
+        //     })
+        // }
+        // function displayAnswers(viz) {
+        //             $('#viz').html('<img src="/' + viz[0] + '" />');
+        //         }
+        // $('#question').keypress(function (e) {
+        //     if (e.which == 13) {
+        //         if ($('#question').val() == "") {
+        //             alert("Please type a query.");
+        //             return;
+        //         }
+        //         $('#question').blur();
+        //         clearResponse();
+        //         $('#status').text('Computing...');
+        //         uploadQuestion($('#question').val());
+        //     }
+        // });
+    </script>
+
+</body>
+
+</html>

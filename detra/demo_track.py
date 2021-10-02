@@ -10,7 +10,7 @@ import json
 import copy
 import numpy as np
 from opts import opts
-from detector import Detector
+from detector_custom import Detector
 import sys
 sys.path.append(
     "/home/yuqingz/autonomous_driving/exploration/img_cttrk/CenterTrack/src/lib")
@@ -21,13 +21,13 @@ sys.path.append(
 image_ext = ['jpg', 'jpeg', 'png', 'webp']
 video_ext = ['mp4', 'mov', 'avi', 'mkv']
 time_stats = ['tot', 'load', 'pre', 'net', 'dec', 'post', 'merge', 'display']
-output_dir = "/home/yuqingz/autonomous_driving/examples/argo_3D_track_1log"
 
 
 def demo(opt):
     os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpus_str
+    output_dir = opt.output_dir
     opt.debug = 4  # max(opt.debug, 1)
-    opt.save_video = True
+    opt.save_video = False
     opt.save_results = True
     opt.resize_video = True
     opt.video_w, opt.video_h = 800, 500
@@ -76,8 +76,9 @@ def demo(opt):
     while True:
         if is_video:
             _, img = cam.read()
+            # print(type(img))
             if img is None:
-                save_and_exit(opt, out, results, out_name=curr_log)
+                save_and_exit(opt, out, results)
         else:
             if cnt < len(image_names):
                 curr_name = image_names[cnt].split("/")
@@ -111,26 +112,32 @@ def demo(opt):
 
         # results[cnt] is a list of dicts:
         #  [{'bbox': [x1, y1, x2, y2], 'tracking_id': id, 'category_id': c, ...}]
-        results[curr_ts] = ret['results']
+        if not is_video:
+            results[curr_ts] = ret['results']
 
         # save debug image to video
-        if opt.save_video:
-            # print(ret['generic'])
-            out.write(ret['generic'])
-            # if not is_video:
+        # if opt.save_video:
+        # print(ret['generic'])
+        # out.write(ret['generic'])
+        # if not is_video:
+        if not is_video:
             cv2.imwrite('{}/{}_{}.jpg'.format(output_dir, curr_log, curr_ts),
+                        ret['generic'])
+        else:
+            cv2.imwrite('{}/{}.jpg'.format(output_dir, cnt),
                         ret['generic'])
 
         # esc to quit and finish saving video
-        if cv2.waitKey(1) == 27:
-            save_and_exit(opt, out, results, out_name=curr_log)
-            return
+        if not is_video:
+            if cv2.waitKey(1) == 27:
+                save_and_exit(opt, out, results, out_name=curr_log)
+                return
     # save_and_exit(opt, out, results)
 
 
 def save_and_exit(opt, out=None, results=None, out_name=''):
     if opt.save_results and (results is not None):
-        save_dir = '{}/{}_results.json'.format(output_dir,
+        save_dir = '{}/{}_results.json'.format(opt.output_dir,
                                                opt.exp_id + '_' + out_name)
         print('saving results to', save_dir)
         json.dump(_to_list(copy.deepcopy(results)),

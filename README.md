@@ -6,6 +6,11 @@ Computer vision has revolutionized the self-driving industry. Object detection a
 + Develop an AI system to recognize obstacles (at least pedestrians & cars) 
 + Determine distances to the identified objects and give collision warnings when needed
 
+### Deliverable
+
+[Web-based API](http://gpu.ronghanghu.com:5000/)
+<img src="https://github.com/zhangyuqing/autonomous_driving/blob/main/examples/webAPI_snapshot.png" alt="Web API Snapshot" width="600"/>
+
 ### Detection
 Detection is performed with [CenterNet model](https://github.com/xingyizhou/CenterNet), pretrained on COCO dataset. CenterNet locolizes objects as their center points. The model was pretrained on MS COCO training images, and validated in ~20k hold-out testing images (test-dev), which achieved 45.1% mAP in multi-scale testing. See [CenterNet paper](https://arxiv.org/pdf/1904.08189.pdf) for details.
 

@@ -9,6 +9,8 @@ python /home/yuqingz/autonomous_driving/detra/demo_track.py tracking,ddd \
     --load_model $CENTERTRACK_PATH/models/nuScenes_3Dtracking.pth \
     --dataset nuscenes --pre_hm --track_thresh 0.1 \
     --test_focal_length 633 \
-    --demo /home/yuqingz/autonomous_driving/exploration/lidar_ptrcnn/data/argoverse-tracking/val/2c07fcda-6671-3ac0-ac23-4a232e0e031e/ring_front_center
-#    --demo /home/yuqingz/autonomous_driving/examples/nuscenes_mini.mp4 
+    --demo $1 \
+    --output_dir $2
+#    --demo /home/yuqingz/autonomous_driving/exploration/lidar_ptrcnn/data/argoverse-tracking/val/2c07fcda-6671-3ac0-ac23-4a232e0e031e/ring_front_center
+
     
