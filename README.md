@@ -6,9 +6,10 @@ Computer vision has revolutionized the self-driving industry. Object detection a
 + Develop an AI system to recognize obstacles (at least pedestrians & cars) 
 + Determine distances to the identified objects and give collision warnings when needed
 
-### Deliverable
+### Deliverables
 
 [Web-based API](http://gpu.ronghanghu.com:5000/)
+
 <img src="https://github.com/zhangyuqing/autonomous_driving/blob/main/examples/webAPI_snapshot.png" alt="Web API Snapshot" width="600"/>
 
 ### Detection
