@@ -1,4 +1,4 @@
-## AI System for Autonomous Driving Real-time Detection
+## Detection & Tracking System for US Self-driving Vehicles
 
 For self-driving vehicles, object detection and tracking are essential tasks that allow vehicles to identify obstacles in its course. We hope to develop an AI system that performs object detection and tracking based on state-of-the-art research.
 
