@@ -8,8 +8,8 @@ import os
 import json
 pylab.rcParams['figure.figsize'] = (10.0, 8.0)
 
-annFile = '/home/yuqingz/autonomous_driving/exploration/img_ctnet/CenterNet/data/kitti-waymo-notrain/annotations/kitti_waymo_trainval.json'
-expDir = '/home/yuqingz/autonomous_driving/exploration/img_ctnet/waymo_pad'
+annFile = '/home/yuqingz/autonomous_driving/exploration/img_ctnet/CenterNet/data/kitti/annotations/kitti_waymo_val.json'
+expDir = '/home/yuqingz/autonomous_driving/exploration/img_ctnet/CenterNet/exp/ctdet/kitti-finetune'
 categories = ['Pedestrian', 'Car', 'Cyclist', 'Van', 'Truck',  'Person_sitting',
               'Tram', 'Misc', 'DontCare']
 # categories = ['__background__', "aeroplane", "bicycle", "bird", "boat",
@@ -30,21 +30,21 @@ def det2coco(exp_dir, GT):
             for line in file:
                 line = line.strip().split()
                 # print(line)
-                lab, _, _, _, x1, y1, x2, y2, _, _, _, _, _, _, _, score = line
-                x1, y1, x2, y2 = float(x1), float(y1), float(x2), float(y2)
+                # lab, _, _, _, x1, y1, x2, y2, _, _, _, _, _, _, _, score = line
+                # x1, y1, x2, y2 = float(x1), float(y1), float(x2), float(y2)
 
-                # x, y, delta_x, delta_y, score = line[-5], line[-4], line[-3], line[-2], line[-1]
-                # idx = 0
-                # while line[idx] != '0.0':
-                #     idx += 1
-                # lab = " ".join(line[:idx])
-                # x, y, delta_x, delta_y = float(x), float(
-                #     y), float(delta_x), float(delta_y)
+                x, y, delta_x, delta_y, score = line[-5], line[-4], line[-3], line[-2], line[-1]
+                idx = 0
+                while line[idx] != '0.0':
+                    idx += 1
+                lab = " ".join(line[:idx])
+                x, y, delta_x, delta_y = float(x), float(
+                    y), float(delta_x), float(delta_y)
                 res.append({
                     'image_id': img['id'],
                     'category_id': cat_ids[lab],
-                    # [x, y, delta_x, delta_y],
-                    'bbox': [x1, y1, x2-x1, y2-y1],
+                    # [x1, y1, x2-x1, y2-y1],
+                    'bbox': [x, y, delta_x, delta_y],
                     'score': float(score)
                 })
     outfile = exp_dir + '/det_res.json'

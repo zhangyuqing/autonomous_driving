@@ -47,7 +47,7 @@ def main():
         img_path = img_path[:len(img_path)-1]
     file_name = img_path.split('/')[-1]
     # print("img_path:", img_path, "\nfile_name:", file_name)
-    output_path = f'/home/yuqingz/autonomous_driving/user_data/output_gif/{file_name}.gif'
+    output_path = f'./user_data/output_gif/{file_name}.gif'
 
     make_gif(img_path, output_path, order=True)
 

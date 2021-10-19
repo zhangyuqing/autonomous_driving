@@ -4,16 +4,16 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import os
 import cv2
-from skimage import io
+# from skimage import io
 from matplotlib.patches import Rectangle
 
 colors = sns.color_palette('Paired', 9 * 2)
 names = ['Car', 'Van', 'Truck', 'Pedestrian',
          'Person_sitting', 'Cyclist', 'Tram', 'Misc', 'DontCare']
 #file_id = '000001'
-gt_dir = '/home/yuqingz/autonomous_driving/explore_data/wod2kitti'
-img_dir = '/home/yuqingz/autonomous_driving/explore_data/wod2kitti_pad/image_0'
-exp_dir = '/home/yuqingz/autonomous_driving/2D/waymo_pad'
+gt_dir = '/home/yuqingz/autonomous_driving/exploration/data/wod2kitti'
+img_dir = '/home/yuqingz/autonomous_driving/exploration/data/wod2kitti_pad/image_0'
+exp_dir = '/home/yuqingz/autonomous_driving/exploration/img_ctnet/waymo_pad'
 default_resolution = (1280, 384)
 
 if __name__ == '__main__':
@@ -68,6 +68,17 @@ if __name__ == '__main__':
                 det_lab, _, _, _, xhat1, yhat1, xhat2, yhat2, _, _, _, _, _, _, _, score = dt
                 xhat1, yhat1, xhat2, yhat2 = map(
                     float, [xhat1, yhat1, xhat2, yhat2])
+                # print(dt)
+
+                # xhat, yhat, delta_xhat, delta_yhat, score = dt[-5], dt[-4], dt[-3], dt[-2], dt[-1]
+                # idx = 0
+                # while dt[idx] != '0.0':
+                #     idx += 1
+                # det_lab = " ".join(dt[:idx])
+                # xhat, yhat, delta_xhat, delta_yhat = map(
+                #     float, [xhat, yhat, delta_xhat, delta_yhat])
+                # print(xhat, yhat, delta_xhat, delta_yhat, img.shape)
+
                 if det_lab != 'DontCare':
                     plt.gca().add_patch(Rectangle((xhat1, yhat1), xhat2 - xhat1, yhat2 - yhat1,
                                                   linewidth=2,
@@ -78,8 +89,18 @@ if __name__ == '__main__':
                              bbox=dict(
                                  facecolor=colors[names.index(det_lab)], alpha=0.5),
                              fontsize=7, color='k')
+                    # plt.gca().add_patch(Rectangle((xhat, yhat), delta_xhat, delta_yhat,
+                    #                               linewidth=2,
+                    #                               edgecolor=colors[names.index(
+                    #                                   det_lab) % len(colors)],
+                    #                               facecolor='none'))
+                    # plt.text(xhat + 3, yhat + 3, f"{det_lab}, {round(float(score), 2)}",
+                    #          bbox=dict(
+                    #              facecolor=colors[names.index(det_lab) % len(colors)], alpha=0.5),
+                    #          fontsize=7, color='k')
             plt.axis('off')
             plt.tight_layout()
             plt.savefig(f'{exp_dir}/bbox_figures/{file_id}.png',
                         bbox_inches='tight')
-            plt.show()
+            # plt.show()
+            plt.close()

@@ -1,0 +1,8 @@
+image: yqng_autodrive:1.0
+port: 8080
+env:
+  - name: ENV
+    value: VAR
+resources:
+  replicas: 1
+  instanceType: C3

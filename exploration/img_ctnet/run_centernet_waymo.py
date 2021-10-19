@@ -4,28 +4,29 @@ from opts import opts
 from datasets.dataset_factory import dataset_factory
 from detectors.detector_factory import detector_factory
 
-MODEL_PATH = '/home/yuqingz/autonomous_driving/2D/CenterNet/models/ddd_3dop.pth'
-TASK = 'ddd'  # or 'multi_pose' for human pose estimation
+MODEL_PATH = '/home/yuqingz/autonomous_driving/exploration/img_ctnet/CenterNet/models/ddd_3dop.pth'
+TASK = 'ddd'
 EXP_ID = 'waymo2kitti'
 DATASET = 'kitti'
 CLASS_NAME = [
-    '__background__', 'Pedestrian', 'Car', 'Cyclist']
-save_dir = '/home/yuqingz/autonomous_driving/2D/waymo_pad'
-# from /home/yuqingz/autonomous_driving/2D/CenterNet/src/lib/datasets/dataset/kitti.py
+    '__background__', 'Pedestrian', 'Car', 'Cyclist']  # KITTI class
 default_resolution = (1280, 384)
+# from /home/yuqingz/autonomous_driving/2D/CenterNet/src/lib/datasets/dataset/kitti.py
+save_dir = '/home/yuqingz/autonomous_driving/exploration/img_ctnet/waymo_pad'
 
 INIT_OPT = [
     TASK,
     '--load_model', MODEL_PATH,
     '--exp_id', EXP_ID,
     '--dataset', DATASET
+    #'--arch', 'resdcn_101'
 ]
 opt = opts().init(INIT_OPT)
 Dataset = dataset_factory[opt.dataset]
 opt = opts().update_dataset_info_and_set_heads(opt, Dataset)
 detector = detector_factory[opt.task](opt)
 
-img_dir = '/home/yuqingz/autonomous_driving/explore_data/wod2kitti_pad/image_0'
+img_dir = '/home/yuqingz/autonomous_driving/exploration/data/wod2kitti_pad/image_0'
 imgs = os.listdir(img_dir)
 
 for img in imgs:

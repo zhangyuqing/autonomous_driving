@@ -27,9 +27,11 @@ def resize_with_padding(img, expected_size):
 
 
 if __name__ == "__main__":
-    img_path = '/home/yuqingz/autonomous_driving/explore_data/wod2kitti/image_0'
-    output_path = '/home/yuqingz/autonomous_driving/explore_data/wod2kitti_pad/image_0'
-    expected_size = (1280, 384)
+    img_path = '/home/yuqingz/autonomous_driving/exploration/data/wod2kitti/image_0'
+    output_path = '/home/yuqingz/autonomous_driving/exploration/data/wod2kitti_pad/image_0'  # KITTI
+    # output_path = '/home/yuqingz/autonomous_driving/exploration/data/wod2kitti_pad_pascal/image_0'
+    expected_size = (1280, 384)  # KITTI
+    # expected_size = ()
 
     all_images = os.listdir(img_path)
 
@@ -37,5 +39,5 @@ if __name__ == "__main__":
         img = Image.open(img_path + '/' + im_path)
         if img.width != 1920 or img.height != 1280:
             print(img.width, img.height)
-        # img = resize_with_padding(img, expected_size)
-        # img.save(output_path + '/' + im_path)
+        img = resize_with_padding(img, expected_size)
+        img.save(output_path + '/' + im_path)

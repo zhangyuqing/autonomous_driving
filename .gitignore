@@ -1,7 +1,5 @@
 .vscode/
-exploration/data/waymo/*
-exploration/data/wod2kitti/*
-exploration/data/wod2kitti_pad/*
+exploration/data/*
 exploration/img_ctnet/waymo/*
 exploration/img_ctnet/waymo_pad/*
 exploration/img_ctnet/waymo_ctdet/*

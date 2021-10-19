@@ -13,14 +13,14 @@ from subprocess import check_output
 from werkzeug.utils import secure_filename
 from flask import Flask, flash, request, redirect, render_template, send_from_directory, jsonify
 
-center_track_dir = '/home/yuqingz/autonomous_driving/exploration/img_cttrk/CenterTrack'
+center_track_dir = './exploration/img_cttrk/CenterTrack'
 image_ext = ['jpg', 'jpeg', 'png', 'webp']
 video_ext = ['mp4', 'mov', 'avi', 'mkv']
 allowed_ext = image_ext + video_ext + ['txt']
 time_stats = ['tot', 'load', 'pre', 'net', 'dec', 'post', 'merge', 'display']
 
-DATA_DIR = "/home/yuqingz/autonomous_driving/exploration/lidar_ptrcnn/data/argoverse-tracking/val/2c07fcda-6671-3ac0-ac23-4a232e0e031e/ring_front_center"
-UPLOAD_DIR = '/home/yuqingz/autonomous_driving/user_data'
+DATA_DIR = "./exploration/lidar_ptrcnn/data/argoverse-tracking/val/2c07fcda-6671-3ac0-ac23-4a232e0e031e/ring_front_center"
+UPLOAD_DIR = './user_data'
 RESULT_DIR = f'{UPLOAD_DIR}/processed'
 VIZ_DIR = f'{UPLOAD_DIR}/output_gif'
 
@@ -35,7 +35,7 @@ VIZ_DIR = f'{UPLOAD_DIR}/output_gif'
 # ]
 
 app = Flask(
-    __name__, template_folder='/home/yuqingz/autonomous_driving/detra/templates', static_url_path='')
+    __name__, template_folder='./templates', static_url_path='')
 app.config['UPLOAD_FOLDER'] = UPLOAD_DIR
 
 '''
@@ -119,17 +119,17 @@ def get_prediction():
     if not os.path.exists(f'{VIZ_DIR}/{file_name}.gif'):
         print('Started making prediction')
         out = check_output(
-            ['bash', '/home/yuqingz/autonomous_driving/detra/run_CenterTrack_3D_api.sh',
+            ['bash', './detra/run_CenterTrack_3D_api.sh',
                 file_path, output_dir]).decode('utf-8')
         out2 = check_output(
-            ["python", "/home/yuqingz/autonomous_driving/detra/detimg2gif.py", output_dir])
+            ["python", "./detra/detimg2gif.py", output_dir])
     jsn = {'out_gif': f'/viz/{file_name}.gif'}
     return jsonify(jsn)
 
 
 @app.route('/viz/<filename>')
 def get_visualization(filename):
-    return send_from_directory(VIZ_DIR, filename)
+    return send_from_directory("../" + VIZ_DIR, filename)
 
 
 if __name__ == '__main__':

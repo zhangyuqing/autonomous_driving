@@ -1,9 +1,9 @@
 ## AI System for Autonomous Driving Real-time Detection
 
-Computer vision has revolutionized the self-driving industry. Object detection and tracking are essential tasks that allow vehicles to identify obstacles in its course and take action. We hope to develop an AI system that is useful in self-driving vehicles. 
+For self-driving vehicles, object detection and tracking are essential tasks that allow vehicles to identify obstacles in its course. We hope to develop an AI system that performs object detection and tracking based on state-of-the-art research.
 
 ### Goals
-+ Develop an AI system to recognize obstacles (at least pedestrians & cars) 
++ Develop an AI system to recognize obstacles
 + Determine distances to the identified objects and give collision warnings when needed
 
 ### Deliverables
@@ -15,7 +15,7 @@ Computer vision has revolutionized the self-driving industry. Object detection a
 ### Detection
 Detection is performed with [CenterNet model](https://github.com/xingyizhou/CenterNet), pretrained on COCO dataset. CenterNet locolizes objects as their center points. The model was pretrained on MS COCO training images, and validated in ~20k hold-out testing images (test-dev), which achieved 45.1% mAP in multi-scale testing. See [CenterNet paper](https://arxiv.org/pdf/1904.08189.pdf) for details.
 
-We applied the pre-trained CenterNet model ([ctdet_coco_hg](https://github.com/xingyizhou/CenterNet/blob/master/readme/MODEL_ZOO.md)) on ~11k images from [Waymo perception data](https://waymo.com/open/download/) validation split. The model achieved 0.15 mAP (IoU 0.5) on this independent test data, 0.31 mAP on large objects.
+We applied the pre-trained CenterNet model ([ddd_3dop](https://github.com/xingyizhou/CenterNet/blob/master/readme/MODEL_ZOO.md)) on ~11k images from [Waymo perception data](https://waymo.com/open/download/) validation split. The model achieved 0.15 mAP (IoU 0.5) on this independent test data, 0.31 mAP on large objects.
 
 <img src="https://github.com/zhangyuqing/autonomous_driving/blob/main/examples/det.gif" alt="Scene 1" width="600"/>
 

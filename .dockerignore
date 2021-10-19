@@ -1,0 +1,20 @@
+.vscode
+tests
+.gitignore
+README.md
+setup.cfg
+setup.py
+examples
+exploration/Argo
+exploration/data
+exploration/img_ctnet
+exploration/lidar_ptrcnn
+exploration/waymo_kitti_converter
+exploration/BDD100K.ipynb
+exploration/Lyft_perception_explore.ipynb
+exploration/nuScene.ipynb
+exploration/run_CenterTrack_3D_argoval.py
+exploration/run_CenterTrack.sh
+exploration/Waymo Open Dataset Tutorial.ipynb
+user_data/processed
+user_data/nuscenes_mini.mp4
