@@ -8,12 +8,14 @@ For self-driving vehicles, object detection and tracking are essential tasks tha
 
 ### Deliverables
 
-[Web-based API](http://gpu.ronghanghu.com:5000/)
+Access the application through this [web-based UI](http://gpu.ronghanghu.com:5000/)
 
-<img src="https://github.com/zhangyuqing/autonomous_driving/blob/main/examples/webAPI_snapshot.png" alt="Web API Snapshot" width="600"/>
+Deployed the [Flask app on Google Cloud Platform](http://35.247.10.254:5000/). (Not always accessible due to limited funding to keep a GPU VM instance running on GCP)
+
+<img src="https://github.com/zhangyuqing/autonomous_driving/blob/main/examples/webAPI_snapshot.png" alt="Web App Snapshot" width="600"/>
 
 ### Detection
-Detection is performed with [CenterNet model](https://github.com/xingyizhou/CenterNet), pretrained on COCO dataset. CenterNet locolizes objects as their center points. The model was pretrained on MS COCO training images, and validated in ~20k hold-out testing images (test-dev), which achieved 45.1% mAP in multi-scale testing. See [CenterNet paper](https://arxiv.org/pdf/1904.08189.pdf) for details.
+Detection is performed with [CenterNet model](https://github.com/xingyizhou/CenterNet), pretrained on KITTI dataset 3DOP train-test split. CenterNet locolizes objects as their center points, and estimates all other properties (e.g. width and height of the bounding box) with regression heads. See [CenterNet paper](https://arxiv.org/pdf/1904.08189.pdf) for details.
 
 We applied the pre-trained CenterNet model ([ddd_3dop](https://github.com/xingyizhou/CenterNet/blob/master/readme/MODEL_ZOO.md)) on ~11k images from [Waymo perception data](https://waymo.com/open/download/) validation split. The model achieved 0.15 mAP (IoU 0.5) on this independent test data, 0.31 mAP on large objects.
 
@@ -31,6 +33,19 @@ We applied the pre-trained CenterTrack 3D model ([nuScenes_3Dtracking](https://g
 
 + Build API for model that takes video inputs, output detection, tracking, distance monitoring results as the illustration above.
 + Build a web-based UI for the API, takes video uploads, display detection results.
+
+[Deployment Architecture](https://docs.google.com/document/d/1NMseQrYBWadg4oT58lORUIZSLquWmteQAMNjRurCtP4/edit?usp=sharing)
+
+
+### File explanation
+
++ detra/ - scripts for model API and Flask web app
+    + *demo_track.py, run_CenterTrack_3D_api.sh*: code adapted from the CenterTrack module, takes videos/images input, output list of images with detection and tracking results
+    + *app.py, detimg2git.py, static, templates*: files for Flask web app
+    + *run_CenterNet.sh, run_CenterTrack_3D.sh*: scripts to run experiments with CenterNet and CenterTrack open-source code
++ Dockerfile, .dockerignore, environment.yml - scripts to build docker image and conda environments for reproduction
++ exploration/ - data collection and wrangling, experiment prototypes, exploration of LiDAR data
++ examples/ - for detection result showcase, and visualization in the README
 
 
 ### (Additional) Exploration and learning on LiDAR point cloud data
